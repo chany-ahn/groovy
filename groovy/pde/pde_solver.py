@@ -114,3 +114,40 @@ def evolve(frame_t0, ru, rv, f, k, dt=1, nsteps=5000, slicestep=50, lap=None, bo
     finalslice = final[:,:,frameslice,:]
 
     return finalslice
+
+
+
+def initialframe(dims):
+    '''function to generate a set of initial conditions to pass to the evolve function when no user-specified
+       input is necessary.
+
+       Parameters
+       ----------
+       dims:       (xdim, ydim): tuple of ints. Spatial dimensions of the initial array
+
+       returns
+       -------
+       initial:    an (xdim x ydim x 1 x 2) numpy array of initial concentrations. dtype will be np.float32 or else
+                   the amount of data will be massive once it gets evolved through time
+
+    '''
+
+    xdim,ydim = dims[0], dims[1]
+
+    # initialize component U to 1.0 and component V to 0.0
+    initial = np.ones((xdim, ydim, 1, 2), dtype=np.float32)
+    initial[:,:,0,1] = initial[:,:,0,1]*0.0
+
+    # decide the size of the clump based on the dimensions of the whole spatial grid
+
+    xcent = xdim // 2
+    ycent = ydim // 2
+    lclump = xdim // 20
+
+    xmin,xmax = xcent - lclump//2, xcent + lclump//2
+    ymin,ymax = ycent - lclump//2, ycent + lclump//2
+
+    # assign clump pixels the value 2
+    initial[xmin:xmax,ymin:ymax,0,1] = np.ones((xmax-xmin, ymax-ymin), dtype=np.float32)
+
+    return initial
