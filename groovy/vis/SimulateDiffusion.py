@@ -4,12 +4,11 @@ import numpy as np
 import pickle
 
 # Importing data to show visualization
-with open('x100_y100_t5000_ru1_rv05_f_055_k062.pkl', 'rb') as f:
+with open('x100_y100_t5000_ru1_rv05_f_055_k062_periodic.pkl', 'rb') as f:
   time_array = pickle.load(f)
 
 # x-dimension, y-dimension, number of time steps, number of components = 2
 x_dim, y_dim, time, components = time_array.shape
-
 
 #Initialize pygame
 pygame.init()
@@ -28,10 +27,11 @@ height = int(window_dim/y_dim)
 
 # create a shape to represent the space and time
 def draw_shape(posX, posY, w, h, color):
-    pygame.draw.rect(window, color, [posX, posY, w, h])
+    pygame.draw.rect(window, color, [posX,posY,w,h])
+    #pygame.draw.circle(window, color, (posX, posY), int(w/2)) # circle
 
 # WILL HAVE TO PICK A BETTER COLOR MAP FUNCTION
-def colorMap(conc1, conc2, prop):
+def colorMap(conc1, conc2):
     # Method to determine concentrations of the each cell
     # 0 < conc < 1
     conc1 = conc1
@@ -50,13 +50,12 @@ def updateCells(k):
     # iterate through the time steps
     component_a_2d = time_array[:, :, k, 0] # concentrations of the first component
     component_b_2d = time_array[:, :, k, 1] # concentrations of the second component
-    for i in range(0, x_dim):
-        for j in range(0, y_dim):
+    for i in range(0, int(x_dim)):
+        for j in range(0, int(y_dim)):
             # drawing rectangles to form cells
             conc1 = component_a_2d[i,j] # conc of comp 1 at space (x,y)
             conc2 = component_b_2d[i,j] # conc of comp 2 at space (x,y)
-            prop = float(k / time)
-            color = colorMap(conc1, conc2, prop) # determine the color for the specfied cell
+            color = colorMap(conc1, conc2) # determine the color for the specfied cell
             draw_shape(i*width, j*height, width, height, color) # draw the shape
 
 def game_loop():
@@ -69,11 +68,9 @@ def game_loop():
         updateCells(k)
         # if k is less than the maximum number of time steps, iterate to the next time step
         if k == time-1:
-            pass
-        else:
             k += 1
         pygame.display.update()
-        clock.tick(20)
+        clock.tick(60)
 
-
+# call the game loop
 game_loop()
