@@ -31,15 +31,17 @@ def draw_shape(posX, posY, w, h, color):
     pygame.draw.rect(window, color, [posX, posY, w, h])
 
 # WILL HAVE TO PICK A BETTER COLOR MAP FUNCTION
-def colorMap(conc1, conc2):
+def colorMap(conc1, conc2, prop):
     # Method to determine concentrations of the each cell
     # 0 < conc < 1
-    n = 255 # RGB value
-    first_shade = conc1 * n
-    second_shade = conc2 * n
+    conc1 = conc1
+    first_shade = conc1 * 255
+    second_shade = conc2 * 255
     # find the average of the two shades
-    n = (first_shade + second_shade) / 2
-    color = (n,n,n) # intialize the color (black default)
+    m = int((first_shade + second_shade) / 2)
+    n = int(conc1 * 255)
+    l = int(conc2 * 255)
+    color = (n,m,l) # intialize the color (black default)
     return color
 
 def updateCells(k):
@@ -53,7 +55,8 @@ def updateCells(k):
             # drawing rectangles to form cells
             conc1 = component_a_2d[i,j] # conc of comp 1 at space (x,y)
             conc2 = component_b_2d[i,j] # conc of comp 2 at space (x,y)
-            color = colorMap(conc1, conc2) # determine the color for the specfied cell
+            prop = float(k / time)
+            color = colorMap(conc1, conc2, prop) # determine the color for the specfied cell
             draw_shape(i*width, j*height, width, height, color) # draw the shape
 
 def game_loop():
