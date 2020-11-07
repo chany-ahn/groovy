@@ -1,13 +1,16 @@
 import pygame
 import time
 import numpy as np
+import pickle
 
-# Arrays for the diffusion data
-time_array = np.zeros((4,4,4,2))
+# Importing data to show visualization
+with open('x100_y100_t5000_ru1_rv05_f_055_k062.pkl', 'rb') as f:
+  time_array = pickle.load(f)
+
 # x-dimension, y-dimension, number of time steps, number of components = 2
-# x_dim, y_dim, time, components = time_array.shape 
-x_dim = 40
-y_dim = 40
+x_dim, y_dim, time, components = time_array.shape
+
+
 #Initialize pygame
 pygame.init()
 
@@ -20,7 +23,6 @@ clock = pygame.time.Clock() # clock to set frame rate
 # number of cells in each dimension for space (should be the same)
 width = int(window_dim/x_dim)
 height = int(window_dim/y_dim)
-print(str(width) + " " + str(height))
 # use a rectangle for now, might change later
 
 
@@ -28,23 +30,47 @@ print(str(width) + " " + str(height))
 def draw_shape(posX, posY, w, h, color):
     pygame.draw.rect(window, color, [posX, posY, w, h])
 
-def updateConc():
+# WILL HAVE TO PICK A BETTER COLOR MAP FUNCTION
+def colorMap(conc1, conc2):
+    # Method to determine concentrations of the each cell
+    # 0 < conc < 1
+    n = 255 # RGB value
+    first_shade = conc1 * n
+    second_shade = conc2 * n
+    # find the average of the two shades
+    n = (first_shade + second_shade) / 2
+    color = (n,n,n) # intialize the color (black default)
+    return color
+
+def updateCells(k):
     # idea of this is to update concs simulatneoulsy so that it displays the "cells"
     # with the current concentrations at a given time step
-    red = (255,0,0)
-    for i in range(0,window_dim, width):
-        for j in range(0, window_dim, height):
-            # drawing rectangles to form a grid
-            draw_shape(i, j, width, height, red)
+    # iterate through the time steps
+    component_a_2d = time_array[:, :, k, 0] # concentrations of the first component
+    component_b_2d = time_array[:, :, k, 1] # concentrations of the second component
+    for i in range(0, x_dim):
+        for j in range(0, y_dim):
+            # drawing rectangles to form cells
+            conc1 = component_a_2d[i,j] # conc of comp 1 at space (x,y)
+            conc2 = component_b_2d[i,j] # conc of comp 2 at space (x,y)
+            color = colorMap(conc1, conc2) # determine the color for the specfied cell
+            draw_shape(i*width, j*height, width, height, color) # draw the shape
 
 def game_loop():
-    running = True
+    running = True # initial condition for the game loop
+    k = 0
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-        updateConc()
+        updateCells(k)
+        # if k is less than the maximum number of time steps, iterate to the next time step
+        if k == time-1:
+            pass
+        else:
+            k += 1
         pygame.display.update()
-        clock.tick(60)
+        clock.tick(20)
+
 
 game_loop()
