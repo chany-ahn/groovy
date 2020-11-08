@@ -7,24 +7,22 @@ sys.path.insert(0, "../..")
 from groovy.pde import evolve, initialframe
 from ex_canvas import user_input
 
-input_desired = int(input("Do you want to specify boundary or have a random simulation? 0/1?"))
+# ask if the user wants to input boundary conditions
+input_desired = int(input("Do you want to specify boundary or have a random simulation? 0/1? "))
 
+# initial conditions for the pde
 if input_desired:
     inp = user_input()
 else:
-    inp = initialframe((100, 100)) # panos frame0
+    inp = initialframe((100, 100))
 
+# user input for the pde
 ru = float(input("Enter diffusion rate for U (0 <= ru <= 1): "))
 rv = float(input("Enter diffusion rate for V (0 <= rv <= 1): "))
 f = float(input("Enter rate constant 0 <= f <= 0.1: "))
 k = float(input("Enter rate constant 0 <= k <= 0.1: "))
 
-time_array = evolve(inp, ru, rv, f, k)
-# if np.isnan(np.sum(time_array)): raise RuntimeError('nans buddy')
-
-# Importing data to show visualization
-# with open('x100_y100_t5000_ru1_rv05_f_0367_k0649_periodic.pkl', 'rb') as f:
-#     time_array = pickle.load(f)
+time_array = evolve(inp, ru, rv, f, k) # getting the data for the diffusion equation
 
 # x-dimension, y-dimension, number of time steps, number of components = 2
 x_dim, y_dim, time, components = time_array.shape
@@ -56,7 +54,7 @@ def colorMap(conc1, conc2):
     color = (int(r),g,int(b))
     return color
 
-def displayGradient():
+def displayGradient(t):
     # draw a border
     draw_shape(window_dim - 257, 0, 256,258, (255,255,255))
     for i in range(256):
@@ -80,6 +78,12 @@ def displayGradient():
     # arrows for the 
     pygame.draw.polygon(window, (255,255,255), [[window_dim - 257, 0], [window_dim - 264, 5], [window_dim-250, 5]])
     pygame.draw.polygon(window, (255,255,255), [[window_dim - 5, 250], [window_dim - 5, 263], [window_dim-2, 256]])
+
+    # Display Time Steps
+    time = font.render("Time Step: " + str(t), True, (255,255,255))
+    timeRect = time.get_rect()
+    timeRect.center = (window_dim - int(255/2), 300)
+    window.blit(time, timeRect)
 
 def updateCells(k):
     # idea of this is to update concs simulatneoulsy so that it displays the "cells"
@@ -108,15 +112,12 @@ def game_loop():
             if event.type == pygame.QUIT:
                 running = False
         updateCells(k)
-        displayGradient()
+        displayGradient(k)
         # if k is less than the maximum number of time steps, iterate to the next time step
         if k != time-1:
             k += 1
         pygame.display.update()
         clock.tick(60)
-
-
-# print(time_array[1:4,1:4,:,:])
 
 # call the game loop
 game_loop()

@@ -38,7 +38,7 @@ def user_input():
             cur_eve = pygame.event.wait()
             mouse_pos = pygame.mouse.get_pos()
             left_click, middle_click, right_click =  pygame.mouse.get_pressed()
-            if cur_eve.type == pygame.QUIT:
+            if cur_eve.type == pygame.QUIT or (cur_eve.type == pygame.KEYDOWN and cur_eve.key == pygame.K_RETURN):
                 raise StopIteration
                 ##the first if satements is if the button is pressed
             if cur_eve.type == pygame.MOUSEBUTTONDOWN:
