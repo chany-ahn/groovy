@@ -126,6 +126,8 @@ def evolve(frame_t0, ru, rv, f, k, dt=1, nsteps=20000, slicestep=50, lap=None, b
 
         frame_tlast = frame_tnext
 
+    final = np.clip(final, 0.0, 1.0)
+
     return final
 
 
