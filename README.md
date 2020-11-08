@@ -23,5 +23,39 @@ Our numerical implementation of the reaction-diffusion model can be found in the
 We include a premade visualization of the PDE solution using the Matplotlib.pyplot library in the <b>Basic_Plotting()</b> function in the <b>BasicPlotting.py</b> python script. The output has been specifically designed for streamlined production of figures for scientific presentation. This function directly interfaces with our PDE solver so that parameters can be set locally before figure generation. The following are examples of the output files:
 
 ![gif load failed](/groovy/vis/diffusionReactionSimulation_Example.gif "Example Mitosis animation")
+
+This is a Grey-Scott simulation with <i>f</i> = 0.0367, <i>k</i> = 0.0649 and fixed boundary conditions.
+
 ![gif load failed](/groovy/vis/diffusionReactionSimulation_Example2.gif "Example Pattern animation")
+
+This is a Grey-Scott simulation with <i>f</i> = 0.055, <i>k</i> = 0.062 and fixed boundary conditions.
+
 ![gif load failed](/groovy/vis/diffusionReactionSimulation_Example2_Periodic.gif "Example Pattern animation with PBC")
+
+This is a simulation with the same parameters as above, but periodic boundary conditions imposed.
+
+## Pygame Visualization
+We can continue to extend how we utilize simulation and visualization techniques by creating a more interactive environment. The user can not only define their own parameters in terminal but can also draw different boundary conditions by setting certain regions of the environment to have reactant U (red) and reactant V (blue). This way the user has a more involved method of manipulating initial conditions to observe how the PDE's evolve over time.
+
+<p align="center">
+  <img src="/groovy/vis/ex_canvas.jpg" width="400" height="400">
+</p>
+At the start, the program asks the user if they want input their own boundary conditions. So the user uses the Left-Click to add reactant U and Right-Click to add reactant V.
+
+These next images show the simulation of the diffusion-reaction with initial conditions  (without user input boundary conditions). <i>ru</i> = 1.0, <i>rv</i> = 0.5, <i>f</i> = 0.055, <i>k</i> = 0.062.
+
+<p align="center">
+  <img src="/groovy/vis/ru_1_rv_005_f_0055_k_0062_beginning.jpg" width="400" height="400">
+</p>
+This is the early stages of the evolution.
+
+<p align="center">
+  <img src="/groovy/vis/ru_1_rv_005_f_0055_k_0062_mid.jpg" width="400" height="400">
+</p>
+This is mid-way into the simulation.
+
+<p align="center">
+  <img src="/groovy/vis/ru_1_rv_005_f_0055_k_0062_final.jpg" width="400" height="400">
+</p>
+This is the final image when all of the time steps have occurred.
+
