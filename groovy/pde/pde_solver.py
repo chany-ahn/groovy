@@ -18,8 +18,8 @@ def time_step(frame_t1, lap, ru, rv, f, k, dt=1, boundary='constant'):
                  performing a Laplacian.
        ru/rv:    the diffusion constants for reactant U and reactant V, respectively. Relevant ranges are
                  0 <= ru/rv <= 1
-       f:        float, the rate constant for the supply of reactant U. Relevant ranges are 0 <= f <= 0.1
-       k:        float, the rate constant for the removal of reactant V. Relevant ranges are 0 <= k <= 0.1
+       f:        float, the rate constant for the supply of reactant U. Relevant ranges are 0.01 <= f <= 0.1
+       k:        float, the rate constant for the removal of reactant V. Relevant ranges are 0.045 <= k <= 0.07
        boundary: 'constant', 'reflect', 'nearest', 'mirror', or 'wrap' (mode parameter in scipy.ndimage.convolve)
                  'constant' will give hard boundaries and 'wrap' will give periodic boundary conditions
 
@@ -67,8 +67,8 @@ def evolve(frame_t0, ru, rv, f, k, dt=1, nsteps=5000, slicestep=50, lap=None, bo
                  and Q is the number of reactants. This should be the initial conditions
        ru/rv:    the diffusion constants for reactant U and reactant V, respectively. Relevant ranges are
                  0 <= ru/rv <= 1
-       f:        float, the rate constant for the supply of reactant U. Relevant ranges are 0 <= f <= 0.1
-       k:        float, the rate constant for the removal of reactant V. Relevant ranges are 0 <= f <= 0.1
+       f:        float, the rate constant for the supply of reactant U. Relevant ranges are 0.01 <= f <= 0.1
+       k:        float, the rate constant for the removal of reactant V. Relevant ranges are 0.045 <= k <= 0.07
        dt:       float, the length of the time step (defalt: 1)
        nsteps:   int, the number of single time steps the function should move the system forward (default: 5000)
        slicestep:int, the final array will be returned thinned so as to make it more manageable to animate and save
