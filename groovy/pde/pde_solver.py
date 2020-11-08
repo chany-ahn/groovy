@@ -5,7 +5,7 @@ import pickle
 from tqdm.auto import tqdm
 
 
-def time_step(frame_t1, lap, ru, rv, f, k, dt=1, boundary='constant'):
+def time_step(frame_t1, lap, ru, rv, f, k, dt=1, boundary='constant', uexp=1, vexp=2):
     '''function to move an initial grid of concentrations forward through the reaction-diffusion equations by
        a single time step dt.
 
@@ -18,10 +18,12 @@ def time_step(frame_t1, lap, ru, rv, f, k, dt=1, boundary='constant'):
                  performing a Laplacian.
        ru/rv:    the diffusion constants for reactant U and reactant V, respectively. Relevant ranges are
                  0 <= ru/rv <= 1
-       f:        float, the rate constant for the supply of reactant U. Relevant ranges are 0.01 <= f <= 0.1
-       k:        float, the rate constant for the removal of reactant V. Relevant ranges are 0.045 <= k <= 0.07
+       f:        float, the rate constant for the supply of reactant U. Relevant ranges are 0 <= f <= 0.1
+       k:        float, the rate constant for the removal of reactant V. Relevant ranges are 0 <= k <= 0.1
        boundary: 'constant', 'reflect', 'nearest', 'mirror', or 'wrap' (mode parameter in scipy.ndimage.convolve)
                  'constant' will give hard boundaries and 'wrap' will give periodic boundary conditions
+       uexp/vexp:int, the stoichiometric coefficient for either u or v in the reaction between the two
+
 
        returns
        -------
@@ -35,7 +37,7 @@ def time_step(frame_t1, lap, ru, rv, f, k, dt=1, boundary='constant'):
     diffterm = ru * lapu
     diffterm = diffterm[:,:,np.newaxis]
 
-    reactterm = frame_t1[:,:,:,0] * frame_t1[:,:,:,1]**2
+    reactterm = frame_t1[:,:,:,0]**uexp * frame_t1[:,:,:,1]**vexp
 
     sourceterm = f*(1 - frame_t1[:,:,:,0])
 
@@ -57,7 +59,8 @@ def time_step(frame_t1, lap, ru, rv, f, k, dt=1, boundary='constant'):
 
 
 
-def evolve(frame_t0, ru, rv, f, k, dt=1, nsteps=5000, slicestep=50, lap=None, boundary='constant'):
+def evolve(frame_t0, ru, rv, f, k, dt=1, nsteps=5000, slicestep=50, lap=None, boundary='constant', uexp=1,
+           vexp=2):
     '''function to move an initial grid of concentrations forward through the reaction-diffusion equations by
        a single time step dt.
 
@@ -67,8 +70,8 @@ def evolve(frame_t0, ru, rv, f, k, dt=1, nsteps=5000, slicestep=50, lap=None, bo
                  and Q is the number of reactants. This should be the initial conditions
        ru/rv:    the diffusion constants for reactant U and reactant V, respectively. Relevant ranges are
                  0 <= ru/rv <= 1
-       f:        float, the rate constant for the supply of reactant U. Relevant ranges are 0.01 <= f <= 0.1
-       k:        float, the rate constant for the removal of reactant V. Relevant ranges are 0.045 <= k <= 0.07
+       f:        float, the rate constant for the supply of reactant U. Relevant ranges are 0 <= f <= 0.1
+       k:        float, the rate constant for the removal of reactant V. Relevant ranges are 0 <= f <= 0.1
        dt:       float, the length of the time step (defalt: 1)
        nsteps:   int, the number of single time steps the function should move the system forward (default: 5000)
        slicestep:int, the final array will be returned thinned so as to make it more manageable to animate and save
@@ -76,6 +79,7 @@ def evolve(frame_t0, ru, rv, f, k, dt=1, nsteps=5000, slicestep=50, lap=None, bo
        lap:      2D numpy array, the (I x J) kernel that will be convolved with the concentrations in place of
                  performing a Laplacian. If none is passed, -1 will be used for the center value, 0.2 will be used
                  for 4-connected pixels, and 0.05 will be used for 8-connected pixels
+       uexp/vexp:int, the stoichiometric coefficient for either u or v in the reaction between the two
 
        boundary: 'constant', 'reflect', 'nearest', 'mirror', or 'wrap' (mode parameter in scipy.ndimage.convolve)
                  'constant' will give hard boundaries and 'wrap' will give periodic boundary conditions
@@ -97,7 +101,7 @@ def evolve(frame_t0, ru, rv, f, k, dt=1, nsteps=5000, slicestep=50, lap=None, bo
     # check the initial frame to make sure it has all of the dimensions necessary to run the time_step
     # function. if it's just missing the time dimension, add it on.
     if len(frame_t0.shape) == 4:
-        continue
+        frame_t0 = frame_t0
     elif len(frame_t0.shape) == 3:
         # add a new, empty axis to fill in the time values
         frame_t0 = frame_t0[:,:,np.newaxis,:]
@@ -113,7 +117,7 @@ def evolve(frame_t0, ru, rv, f, k, dt=1, nsteps=5000, slicestep=50, lap=None, bo
     # time by dt and then appending this new frame onto the final array
     for step in tqdm(range(nsteps-1), desc='Time steps', leave=False):
 
-        frame_tnext = time_step(frame_tlast, lap, ru, rv, f, k, dt=dt, boundary=boundary)
+        frame_tnext = time_step(frame_tlast, lap, ru, rv, f, k, dt=dt, boundary=boundary, uexp=uexp, vexp=vexp)
         final = np.concatenate((final, frame_tnext), axis=2)
 
         frame_tlast = frame_tnext
