@@ -5,8 +5,14 @@ import pickle
 import sys
 sys.path.insert(0, "../..")
 from groovy.pde import evolve, initialframe
+from ex_canvas import user_input
 
-inp = initialframe((100, 100)) # panos frame0
+input_desired = int(input("Do you want to specify boundary or have a random simulation? 0/1?"))
+
+if input_desired:
+    inp = user_input()
+else:
+    inp = initialframe((100, 100)) # panos frame0
 
 ru = float(input("Enter diffusion rate for U (0 <= ru <= 1): "))
 rv = float(input("Enter diffusion rate for V (0 <= rv <= 1): "))
@@ -61,8 +67,9 @@ def displayGradient():
     # time for captions
     font = pygame.font.Font('OpenSans-Regular.ttf', 12)
 
-    conc1 = font.render("Conc. Component A", True, (255,255,255))
-    conc2 = font.render("Conc. Component B", True, (255,255,255))
+    conc1 = font.render("Conc. Component B", True, (255,255,255))
+    conc2 = font.render("Conc. Component A", True, (255,255,255))
+
     conc1Rect = conc1.get_rect()
     conc2Rect = conc2.get_rect()
     conc1Rect.center = (window_dim - 258 - int(conc1Rect.width/2), int(255/2))
