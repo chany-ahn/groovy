@@ -118,17 +118,15 @@ def evolve(frame_t0, ru, rv, f, k, dt=1, nsteps=5000, slicestep=50, lap=None, bo
     for step in tqdm(range(nsteps-1), desc='Time steps', leave=False):
 
         frame_tnext = time_step(frame_tlast, lap, ru, rv, f, k, dt=dt, boundary=boundary, uexp=uexp, vexp=vexp)
-        final = np.concatenate((final, frame_tnext), axis=2)
+
+        # if the step is one of the indices of the thinned frames, keep it in the final array
+        # otherwise move on
+        if (step % slicestep) == 0:
+            final = np.concatenate((final, frame_tnext), axis=2)
 
         frame_tlast = frame_tnext
 
-
-    # thin out the data in the time axis - only keep one in every slicestep frames (to make it better to animate)
-    frameslice = np.arange(0, nsteps, slicestep)
-
-    finalslice = final[:,:,frameslice,:]
-
-    return finalslice
+    return final
 
 
 
