@@ -42,11 +42,11 @@ At the start, the program asks the user if they want input their own boundary co
 
 These next images show the simulation of the diffusion-reaction with initial conditions  (without user input boundary conditions). <i>ru</i> = 1.0, <i>rv</i> = 0.5, <i>f</i> = 0.055, <i>k</i> = 0.062.
 
-<img src="/groovy/vis/ru_1_rv_005_f_0055_k_0062_beginning">
+<img src="/groovy/vis/ru_1_rv_005_f_0055_k_0062_beginning.jpg">
 This is the early stages of the evolution.
 
-<img src="/groovy/vis/ru_1_rv_005_f_0055_k_0062_mid">
+<img src="/groovy/vis/ru_1_rv_005_f_0055_k_0062_mid.jpg">
 This is mid-way into the simulation.
 
-<img src="/groovy/vis/ru_1_rv_005_f_0055_k_0062_final">
+<img src="/groovy/vis/ru_1_rv_005_f_0055_k_0062_final.jpg">
 This is the final image when all of the time steps have occurred.
