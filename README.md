@@ -64,12 +64,12 @@ Once a steady state is reached for a Diffusion-Reaction simulation, the pattern 
 
 It was first necessary to create a large database of 18,000 steady state systems.
 <p align="center">
-  <img src="/groovy/ml/figs/dataset.png" width="400" height="400">
+  <img src="/groovy/ml/figs/dataset.png" width="800" height="800">
 </p>
 
 Once this was done, it was possible to train the CNN. The training curves are shown below, where Early Stopping was implemented to avoid overfitting.
 <p align="center">
-  <img src="/groovy/ml/figs/training.png" width="400" height="400">
+  <img src="/groovy/ml/figs/training.png" width="700" height="400">
 </p>
 
 This model allows us to determine evolution parameters from steady states. To evaluate this qualitatively, we can take the CNN predictions and pump them back through the PDE solver, and visualize the difference between the steady state from the real parameters, and the steady state from the predicted parameters. Here are two examples from the test set.
