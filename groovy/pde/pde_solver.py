@@ -59,7 +59,7 @@ def time_step(frame_t1, lap, ru, rv, f, k, dt=1, boundary='constant', uexp=1, ve
 
 
 
-def evolve(frame_t0, ru, rv, f, k, dt=1, nsteps=10000, slicestep=50, lap=None, boundary='constant', uexp=1,
+def evolve(frame_t0, ru, rv, f, k, dt=1, nsteps=20000, slicestep=50, lap=None, boundary='constant', uexp=1,
            vexp=2):
     '''function to move an initial grid of concentrations forward through the reaction-diffusion equations by
        a single time step dt.

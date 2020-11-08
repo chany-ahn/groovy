@@ -1,1 +1,1 @@
-from .pde_solver.py import evolve, initialframe
+from .pde_solver import evolve, initialframe
