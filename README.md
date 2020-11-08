@@ -35,7 +35,7 @@ This is a Grey-Scott simulation with <i>f</i> = 0.055, <i>k</i> = 0.062 and fixe
 This is a simulation with the same parameters as above, but periodic boundary conditions imposed.
 
 ## Pygame Visualization
-We can continue to extend how we utilize simulation and visualization techniques by creating a more interactive environment. The user can not only define their own parameters in terminal but can also draw different boundary conditions by setting certain regions of the environment to have reactant U (red) and reactant V (blue). This way the user has a more involved method of manipulating initial conditions to observe how the PDE's evolve over time.
+We can continue to extend how we utilize simulation and visualization techniques by creating a more interactive environment. The user can not only define their own parameters in terminal but can also draw different initial conditions by setting certain regions of the environment to have reactant U (red) and reactant V (blue). This way the user has a more involved method of manipulating initial conditions to observe how the PDE's evolve over time.
 
 <p align="center">
   <img src="/groovy/vis/ex_canvas.jpg" width="400" height="400">
@@ -58,4 +58,23 @@ This is mid-way into the simulation.
   <img src="/groovy/vis/ru_1_rv_005_f_0055_k_0062_final.jpg" width="400" height="400">
 </p>
 This is the final image when all of the time steps have occurred.
+
+## Machine Learning
+Once a steady state is reached for a Diffusion-Reaction simulation, the pattern that is formed is characteristic of the diffisuion and reaction parameters that were set for the evolution. Therefore, we can use a Convolutional Neural Network (CNN) to study the relevant structures in the images and solve the backwards problem, receiving final steady state images as inputs and predicting the system parameters.
+
+It was first necessary to create a large database of 18,000 steady state systems.
+<p align="center">
+  <img src="/groovy/ml/figs/dataset.png" width="800" height="800">
+</p>
+
+Once this was done, it was possible to train the CNN. The training curves are shown below, where Early Stopping was implemented to avoid overfitting.
+<p align="center">
+  <img src="/groovy/ml/figs/training.png" width="500" height="400">
+</p>
+
+This model allows us to determine evolution parameters from steady states. To evaluate this qualitatively, we can take the CNN predictions and pump them back through the PDE solver, and visualize the difference between the steady state from the real parameters, and the steady state from the predicted parameters. Here are two examples from the test set.
+
+![gif load failed](/groovy/ml/figs/test_1.gif "Example 1 from test set")
+
+![gif load failed](/groovy/ml/figs/test_2.gif "Example 2 from test set")
 
