@@ -40,7 +40,7 @@ We can continue to extend how we utilize simulation and visualization techniques
 <img src="/groovy/vis/ex_canvas.jpg">
 At the start, the program asks the user if they want input their own boundary conditions. So the user uses the Left-Click to add reactant U and Right-Click to add reactant V.
 
-These next images show the simulation of the diffusion-reaction with initial conditions  (without user input boundary conditions). <i>ru</i> = 1.0, <i>rv<\i> = 0.5, <i>f</i> = 0.055, <i>k</i> = 0.062.
+These next images show the simulation of the diffusion-reaction with initial conditions  (without user input boundary conditions). <i>ru</i> = 1.0, <i>rv</i> = 0.5, <i>f</i> = 0.055, <i>k</i> = 0.062.
 
 <img src="/groovy/vis/ru_1_rv_005_f_0055_k_0062_beginning">
 This is the early stages of the evolution.
