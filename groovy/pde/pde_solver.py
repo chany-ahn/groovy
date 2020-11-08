@@ -59,7 +59,7 @@ def time_step(frame_t1, lap, ru, rv, f, k, dt=1, boundary='constant', uexp=1, ve
 
 
 
-def evolve(frame_t0, ru, rv, f, k, dt=1, nsteps=5000, slicestep=50, lap=None, boundary='constant', uexp=1,
+def evolve(frame_t0, ru, rv, f, k, dt=1, nsteps=10000, slicestep=50, lap=None, boundary='constant', uexp=1,
            vexp=2):
     '''function to move an initial grid of concentrations forward through the reaction-diffusion equations by
        a single time step dt.
@@ -73,7 +73,7 @@ def evolve(frame_t0, ru, rv, f, k, dt=1, nsteps=5000, slicestep=50, lap=None, bo
        f:        float, the rate constant for the supply of reactant U. Relevant ranges are 0 <= f <= 0.1
        k:        float, the rate constant for the removal of reactant V. Relevant ranges are 0 <= f <= 0.1
        dt:       float, the length of the time step (defalt: 1)
-       nsteps:   int, the number of single time steps the function should move the system forward (default: 5000)
+       nsteps:   int, the number of single time steps the function should move the system forward (default: 10000)
        slicestep:int, the final array will be returned thinned so as to make it more manageable to animate and save
                  as a file. This gives the number of frames that should be skipped before keeping one. (default:50)
        lap:      2D numpy array, the (I x J) kernel that will be convolved with the concentrations in place of
