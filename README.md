@@ -20,7 +20,7 @@ These partial differential equations can be solved numerically to simulate chemi
 Our numerical implementation of the reaction-diffusion model can be found in the <b>evolve()</b> function in the <b>pde_solver.py</b> python script. The user can vary many components of the model, including the boundary conditions, the spatial dimensions, the length of time over which it integrates, and the discrete Laplacian kernel used to perform the spatial derivation. 
 
 ## Matplotlib Visualization
-We include a premade visualization of the PDE solution using the Matplotlib.pyplot library in the <b>Basic.ipynb</b> Jupyter Notebook file. The output has been specifically designed for streamlined production of figures for scientific presentation. This file directly interfaces with our PDE solver so that parameters can be set locally before figure generation. The following are examples of the output files:
+We include a premade visualization of the PDE solution using the Matplotlib.pyplot library in the <b>Basic_Plotting()</b> function in the <b>BasicPlotting.py</b> python script. The output has been specifically designed for streamlined production of figures for scientific presentation. This function directly interfaces with our PDE solver so that parameters can be set locally before figure generation. The following are examples of the output files:
 
 ![gif load failed](/groovy/vis/diffusionReactionSimulation_Example.gif "Example Mitosis animation")
 ![gif load failed](/groovy/vis/diffusionReactionSimulation_Example2.gif "Example Pattern animation")
