@@ -2,10 +2,23 @@ import pygame
 import time
 import numpy as np
 import pickle
+import sys
+sys.path.insert(0, "../..")
+from groovy.pde import evolve, initialframe
+
+inp = initialframe((100, 100)) # panos frame0
+
+ru = float(input("Enter diffusion rate for U (0 <= ru <= 1): "))
+rv = float(input("Enter diffusion rate for V (0 <= rv <= 1): "))
+f = float(input("Enter rate constant 0 <= f <= 0.1: "))
+k = float(input("Enter rate constant 0 <= k <= 0.1: "))
+
+time_array = evolve(inp, ru, rv, f, k)
+# if np.isnan(np.sum(time_array)): raise RuntimeError('nans buddy')
 
 # Importing data to show visualization
-with open('x100_y100_t5000_ru1_rv05_f_055_k062_periodic.pkl', 'rb') as f:
-  time_array = pickle.load(f)
+# with open('x100_y100_t5000_ru1_rv05_f_0367_k0649_periodic.pkl', 'rb') as f:
+#     time_array = pickle.load(f)
 
 # x-dimension, y-dimension, number of time steps, number of components = 2
 x_dim, y_dim, time, components = time_array.shape
@@ -31,10 +44,10 @@ def draw_shape(posX, posY, w, h, color):
 
 def colorMap(conc1, conc2):
     # Method to determine concentrations of the each cell
-    # 0 < conc < 1  -> 0 <= conc1 + conc2 <= 2
+    # 0 <= conc <= 1  -> 0 <= conc1 + conc2 <= 2
     r = conc1 * 255
     b = conc2 * 255
-    color = (r,g,b)
+    color = (int(r),g,int(b))
     return color
 
 def displayGradient():
@@ -43,6 +56,8 @@ def displayGradient():
     for i in range(256):
         for j in range(256):
                 draw_shape(window_dim - 255 + i,255-j,1,1,(i,g,j))
+
+
     # time for captions
     font = pygame.font.Font('OpenSans-Regular.ttf', 12)
 
@@ -55,6 +70,7 @@ def displayGradient():
     window.blit(conc1, conc1Rect)
     window.blit(conc2, conc2Rect)
 
+    # arrows for the 
     pygame.draw.polygon(window, (255,255,255), [[window_dim - 257, 0], [window_dim - 264, 5], [window_dim-250, 5]])
     pygame.draw.polygon(window, (255,255,255), [[window_dim - 5, 250], [window_dim - 5, 263], [window_dim-2, 256]])
 
@@ -91,6 +107,9 @@ def game_loop():
             k += 1
         pygame.display.update()
         clock.tick(60)
+
+
+# print(time_array[1:4,1:4,:,:])
 
 # call the game loop
 game_loop()
