@@ -23,5 +23,13 @@ Our numerical implementation of the reaction-diffusion model can be found in the
 We include a premade visualization of the PDE solution using the Matplotlib.pyplot library in the <b>Basic_Plotting()</b> function in the <b>BasicPlotting.py</b> python script. The output has been specifically designed for streamlined production of figures for scientific presentation. This function directly interfaces with our PDE solver so that parameters can be set locally before figure generation. The following are examples of the output files:
 
 ![gif load failed](/groovy/vis/diffusionReactionSimulation_Example.gif "Example Mitosis animation")
+
+This is a Grey-Scott simulation with <i>f</i> = 0.0367, <i>k</i> = 0.0649 and fixed boundary conditions.
+
 ![gif load failed](/groovy/vis/diffusionReactionSimulation_Example2.gif "Example Pattern animation")
+
+This is a Grey-Scott simulation with <i>f</i> = 0.055, <i>k</i> = 0.062 and fixed boundary conditions.
+
 ![gif load failed](/groovy/vis/diffusionReactionSimulation_Example2_Periodic.gif "Example Pattern animation with PBC")
+
+This is a simulation with the same parameters as above, but periodic boundary conditions imposed.
