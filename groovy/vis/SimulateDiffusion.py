@@ -19,7 +19,7 @@ rv = float(input("Enter diffusion rate for V (0 <= rv <= 1): "))
 f = float(input("Enter rate constant 0 <= f <= 0.1: "))
 k = float(input("Enter rate constant 0 <= k <= 0.1: "))
 
-time_array = evolve(inp, ru, rv, f, k, nsteps=500)
+time_array = evolve(inp, ru, rv, f, k)
 # if np.isnan(np.sum(time_array)): raise RuntimeError('nans buddy')
 
 # Importing data to show visualization
