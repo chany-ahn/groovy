@@ -22,6 +22,7 @@ clock = pygame.time.Clock() # clock to set frame rate
 # number of cells in each dimension for space (should be the same)
 width = int(window_dim/x_dim)
 height = int(window_dim/y_dim)
+g = 0
 
 # create a shape to represent the space and time
 def draw_shape(posX, posY, w, h, color):
@@ -32,7 +33,6 @@ def colorMap(conc1, conc2):
     # Method to determine concentrations of the each cell
     # 0 < conc < 1  -> 0 <= conc1 + conc2 <= 2
     r = conc1 * 255
-    g = 0
     b = conc2 * 255
     color = (r,g,b)
     return color
@@ -42,7 +42,7 @@ def displayGradient():
     draw_shape(window_dim - 257, 0, 256,258, (255,255,255))
     for i in range(256):
         for j in range(256):
-                draw_shape(window_dim - 255 + i,255-j,1,1,(i,0,j))
+                draw_shape(window_dim - 255 + i,255-j,1,1,(i,g,j))
     # time for captions
     font = pygame.font.Font('OpenSans-Regular.ttf', 12)
 
@@ -54,6 +54,9 @@ def displayGradient():
     conc2Rect.center = (window_dim - int(255/2), 267)
     window.blit(conc1, conc1Rect)
     window.blit(conc2, conc2Rect)
+
+    pygame.draw.polygon(window, (255,255,255), [[window_dim - 257, 0], [window_dim - 264, 5], [window_dim-250, 5]])
+    pygame.draw.polygon(window, (255,255,255), [[window_dim - 5, 250], [window_dim - 5, 263], [window_dim-2, 256]])
 
 def updateCells(k):
     # idea of this is to update concs simulatneoulsy so that it displays the "cells"
