@@ -53,9 +53,6 @@ def time_step(frame_t1, lap, ru, rv, f, k, dt=1, boundary='constant', uexp=1, ve
     sinkterm = (f + k)*frame_t1[:,:,:,1]
 
     frame_t2 = np.stack((frame_t2, frame_t1[:,:,:,1] + (diffterm + reactterm - sinkterm)*dt), axis=-1)
-    # just in case there were any issues with the discrete integration that put values outside of the
-    # accepted range, clip the array to betwene 0 and 1
-    frame_t2 = np.clip(frame_t2, 0.0, 1.0)
 
     return frame_t2
 
@@ -128,6 +125,8 @@ def evolve(frame_t0, ru, rv, f, k, dt=1, nsteps=20000, slicestep=50, lap=None, b
             final = np.concatenate((final, frame_tnext), axis=2)
 
         frame_tlast = frame_tnext
+
+    final = np.clip(final, 0.0, 1.0)
 
     return final
 
