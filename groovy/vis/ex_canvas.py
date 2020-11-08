@@ -1,4 +1,5 @@
-import pygame, random
+import pygame
+import random
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -81,8 +82,8 @@ for x, y in scaled_arr_right:
     else:
         frame_0[x, y, 1] = 1
 
-plt.imshow(frame_0[:,:,0])
-print(scaled_arr_left)
+plt.imshow(frame_0[:,:,1])
+
 
 '''
 pos_arr_lef = np.floor(pos_arr_lef)
