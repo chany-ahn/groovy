@@ -94,6 +94,17 @@ def evolve(frame_t0, ru, rv, f, k, dt=1, nsteps=5000, slicestep=50, lap=None, bo
                         [0.2, -1, 0.2],
                         [0.05, 0.2, 0.05]]) # values suggested by https://www.karlsims.com/rd.html
 
+    # check the initial frame to make sure it has all of the dimensions necessary to run the time_step
+    # function. if it's just missing the time dimension, add it on.
+    if len(frame_t0.shape) == 4:
+        continue
+    elif len(frame_t0.shape) == 3:
+        # add a new, empty axis to fill in the time values
+        frame_t0 = frame_t0[:,:,np.newaxis,:]
+    else:
+        print('Initial conditions are the wrong shape. Exiting.')
+        return 0
+
     # start with the initial frame as the 0th entry
     frame_tlast = frame_t0
     final = frame_t0
