@@ -35,12 +35,12 @@ This is a Grey-Scott simulation with <i>f</i> = 0.055, <i>k</i> = 0.062 and fixe
 This is a simulation with the same parameters as above, but periodic boundary conditions imposed.
 
 ## Pygame Visualization
-We can continue to extend how we utilize simulation and visualization techniques by creating a more interactive environment. The user can not only define their own parameters in terminal but can also draw different initial conditions by setting certain regions of the environment to have reactant U (red) and reactant V (blue). This way the user has a more involved method of manipulating initial conditions to observe how the PDE's evolve over time.
+We can continue to extend how we utilize these simulation and visualization techniques by creating a more interactive environment. The user can not only define their own parameters in terminal but can also draw different initial conditions by setting certain regions of the environment to have reactant U (red) and reactant V (blue). This way the user has a more involved method of manipulating initial conditions to observe how the PDE's evolve over time.
 
 <p align="center">
   <img src="/groovy/vis/ex_canvas.jpg" width="400" height="400">
 </p>
-At the start, the program asks the user if they want input their own boundary conditions. So the user uses the Left-Click to add reactant U and Right-Click to add reactant V.
+At the start, the program asks the user if they want to input their own boundary conditions. So the user uses the Left-Click to add reactant U and Right-Click to add reactant V.
 
 These next images show the simulation of the diffusion-reaction with initial conditions  (without user input boundary conditions). <i>ru</i> = 1.0, <i>rv</i> = 0.5, <i>f</i> = 0.055, <i>k</i> = 0.062.
 
