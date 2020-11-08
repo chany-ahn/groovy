@@ -3,6 +3,7 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def user_input():
     # frame_0 is gonna be the input frame for the evolve function
 

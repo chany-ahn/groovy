@@ -69,6 +69,7 @@ def displayGradient():
 
     conc1 = font.render("Conc. Component B", True, (255,255,255))
     conc2 = font.render("Conc. Component A", True, (255,255,255))
+
     conc1Rect = conc1.get_rect()
     conc2Rect = conc2.get_rect()
     conc1Rect.center = (window_dim - 258 - int(conc1Rect.width/2), int(255/2))
